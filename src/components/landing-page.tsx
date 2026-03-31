@@ -27,6 +27,9 @@ export function LandingPage() {
   const [form, setForm] = useState(emptyForm)
   const [formStatus, setFormStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
   const [ageError, setAgeError] = useState("")
+  const [photos, setPhotos] = useState<{ file: File; preview: string }[]>([])
+  const [consentPersonal, setConsentPersonal] = useState(false)
+  const [consentPhotos, setConsentPhotos] = useState(false)
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -48,21 +51,50 @@ export function LandingPage() {
     setForm(emptyForm)
     setAgeError("")
     setFormStatus("idle")
+    setPhotos([])
+    setConsentPersonal(false)
+    setConsentPhotos(false)
+  }
+
+  const handlePhotoAdd = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || [])
+    const remaining = 3 - photos.length
+    files.slice(0, remaining).forEach((file) => {
+      const reader = new FileReader()
+      reader.onload = (ev) => {
+        setPhotos((prev) => prev.length < 3 ? [...prev, { file, preview: ev.target?.result as string }] : prev)
+      }
+      reader.readAsDataURL(file)
+    })
+    e.target.value = ""
+  }
+
+  const handlePhotoRemove = (idx: number) => {
+    setPhotos((prev) => prev.filter((_, i) => i !== idx))
   }
 
   const handleSubmit = async () => {
-    if (!form.name || !form.phone || ageError) return
+    if (!form.name || !form.phone || ageError || photos.length < 3 || !consentPersonal || !consentPhotos) return
     setFormStatus("loading")
     try {
       const res = await fetch("https://functions.poehali.dev/b7548504-a532-4f31-a3d5-72a96123996e", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, category: activeTab === "miss" ? "Мисс" : "Миссис" }),
+        body: JSON.stringify({
+          ...form,
+          category: activeTab === "miss" ? "Мисс" : "Миссис",
+          photos: photos.map((p) => p.preview),
+          consentPersonal,
+          consentPhotos,
+        }),
       })
       const data = await res.json()
       if (data.success) {
         setFormStatus("success")
         setForm(emptyForm)
+        setPhotos([])
+        setConsentPersonal(false)
+        setConsentPhotos(false)
       } else {
         setFormStatus("error")
       }
@@ -498,12 +530,56 @@ export function LandingPage() {
                   <Textarea name="about" value={form.about} onChange={handleFormChange} placeholder="Увлечения, достижения, мечты..." rows={3}
                     className={cn("text-sm resize-none", themeConfig.muted, themeConfig.cardForeground, themeConfig.border, themeConfig.fontClass, "placeholder:opacity-40")} />
                 </div>
+
+                {/* Photo upload */}
+                <div className="flex flex-col gap-2">
+                  <Label className={cn("text-xs font-semibold", themeConfig.cardForeground, themeConfig.fontClass)}>
+                    Фотографии * <span className={cn("font-normal", themeConfig.mutedForeground)}>({photos.length}/3)</span>
+                  </Label>
+                  <div className={cn("text-xs rounded-lg px-3 py-2 leading-relaxed", themeConfig.muted, themeConfig.mutedForeground, themeConfig.fontClass)}>
+                    📋 Необходимо прикрепить <b>3 фотографии</b>: портретное фото, фото в полный рост и творческое фото. Фотографии должны быть <b>не старше 3 лет</b>.
+                  </div>
+                  <div className={cn("text-xs rounded-lg px-3 py-2", "bg-amber-50 text-amber-700 border border-amber-200", themeConfig.fontClass)}>
+                    ⚠️ Фотографии будут опубликованы на сайте конкурса для интернет-голосования.
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[0, 1, 2].map((idx) => (
+                      <div key={idx} className={cn("relative aspect-square rounded-xl border-2 border-dashed flex items-center justify-center overflow-hidden transition-all", themeConfig.border, photos[idx] ? "border-solid" : "")}>
+                        {photos[idx] ? (
+                          <>
+                            <img src={photos[idx].preview} alt={`Фото ${idx + 1}`} className="w-full h-full object-cover" />
+                            <button onClick={() => handlePhotoRemove(idx)} className="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white rounded-full text-xs flex items-center justify-center hover:bg-red-600">✕</button>
+                          </>
+                        ) : (
+                          <label className="w-full h-full flex flex-col items-center justify-center cursor-pointer gap-1">
+                            <span className="text-xl">📷</span>
+                            <span className={cn("text-[10px]", themeConfig.mutedForeground, themeConfig.fontClass)}>Фото {idx + 1}</span>
+                            <input type="file" accept="image/*" className="hidden" onChange={handlePhotoAdd} disabled={photos.length > idx} />
+                          </label>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Consents */}
+                <div className="flex flex-col gap-3">
+                  <label className={cn("flex items-start gap-3 cursor-pointer text-xs leading-relaxed", themeConfig.cardForeground, themeConfig.fontClass)}>
+                    <input type="checkbox" checked={consentPersonal} onChange={(e) => setConsentPersonal(e.target.checked)} className="mt-0.5 shrink-0 w-4 h-4 accent-purple-500" />
+                    <span>Я даю <b>согласие на обработку персональных данных</b> в соответствии с ФЗ-152 «О персональных данных» для участия в конкурсе «Мисс и Миссис Интернет Краснокаменск 2026».</span>
+                  </label>
+                  <label className={cn("flex items-start gap-3 cursor-pointer text-xs leading-relaxed", themeConfig.cardForeground, themeConfig.fontClass)}>
+                    <input type="checkbox" checked={consentPhotos} onChange={(e) => setConsentPhotos(e.target.checked)} className="mt-0.5 shrink-0 w-4 h-4 accent-purple-500" />
+                    <span>Я даю <b>согласие на использование моих фотографий</b> для публикации на сайте конкурса и проведения интернет-голосования.</span>
+                  </label>
+                </div>
+
                 {formStatus === "error" && (
                   <p className="text-xs text-red-500 text-center">Ошибка отправки. Попробуйте ещё раз.</p>
                 )}
                 <button
                   onClick={handleSubmit}
-                  disabled={formStatus === "loading" || !form.name || !form.phone || !!ageError}
+                  disabled={formStatus === "loading" || !form.name || !form.phone || !!ageError || photos.length < 3 || !consentPersonal || !consentPhotos}
                   className={cn(
                     "w-full py-3 font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-sm rounded-xl",
                     "hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed",
