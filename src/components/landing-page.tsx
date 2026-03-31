@@ -537,7 +537,7 @@ export function LandingPage() {
                     Фотографии * <span className={cn("font-normal", themeConfig.mutedForeground)}>({photos.length}/3)</span>
                   </Label>
                   <div className={cn("text-xs rounded-lg px-3 py-2 leading-relaxed", themeConfig.muted, themeConfig.mutedForeground, themeConfig.fontClass)}>
-                    📋 Необходимо прикрепить <b>3 фотографии</b>: портретное фото, фото в полный рост и творческое фото. Фотографии должны быть <b>не старше 3 лет</b>.
+                    📋 Необходимо прикрепить <b>3 любых фотографии</b>, где вы одна. Фотографии должны быть <b>не старше 3 лет</b>.
                   </div>
                   <div className={cn("text-xs rounded-lg px-3 py-2", "bg-amber-50 text-amber-700 border border-amber-200", themeConfig.fontClass)}>
                     ⚠️ Фотографии будут опубликованы на сайте конкурса для интернет-голосования.
