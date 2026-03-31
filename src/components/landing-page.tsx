@@ -48,101 +48,101 @@ export function LandingPage() {
     }
   > = {
     "minimal-light": {
-      badge: "Скоро запуск",
-      title: "Будущее",
-      highlight: "продуктивности",
+      badge: "Голосование открывается скоро",
+      title: "Мисс и Миссис",
+      highlight: "Краснокаменск 2026",
       subtitle:
-        "Мы создаем то, что изменит ваш подход к работе. Просто, мощно и современно.",
-      cta: "Получить ранний доступ",
+        "Интернет-голосование за самых ярких участниц конкурса красоты и элегантности. Поддержи свою фаворитку!",
+      cta: "Уведомить меня о старте",
       features: [
-        { icon: Sparkles, text: "На базе ИИ" },
-        { icon: Zap, text: "Молниеносно" },
-        { icon: Shield, text: "Приватность" },
+        { icon: Sparkles, text: "Онлайн-голосование" },
+        { icon: Star, text: "32 участницы" },
+        { icon: Shield, text: "Честное голосование" },
       ],
     },
     dark: {
-      badge: "Скоро старт",
-      title: "Новый уровень",
-      highlight: "эволюции",
-      subtitle: "Новый стандарт цифрового опыта. Создано для тех, кто требует лучшего.",
-      cta: "Встать в очередь",
+      badge: "Голосование скоро",
+      title: "Мисс и Миссис",
+      highlight: "Краснокаменск 2026",
+      subtitle: "Реши судьбу конкурса — голосуй за самых достойных. Каждый голос важен.",
+      cta: "Уведомить меня о старте",
       features: [
-        { icon: Sparkles, text: "Новое поколение" },
-        { icon: Zap, text: "Сверхскорость" },
-        { icon: Shield, text: "Для бизнеса" },
+        { icon: Sparkles, text: "Онлайн-голосование" },
+        { icon: Star, text: "32 участницы" },
+        { icon: Shield, text: "Честное голосование" },
       ],
     },
     retro: {
-      badge: "Отправление скоро",
-      title: "Ваше путешествие",
-      highlight: "начинается здесь",
-      subtitle: "Шагните в мир, где классика встречает инновации. Вечный дизайн, современный функционал.",
-      cta: "Забронировать место",
+      badge: "Конкурс красоты 2026",
+      title: "Мисс и Миссис",
+      highlight: "Краснокаменск",
+      subtitle: "Традиционный конкурс красоты и элегантности. Поддержи участницу своим голосом!",
+      cta: "Уведомить меня о старте",
       features: [
-        { icon: Sparkles, text: "Вечный дизайн" },
-        { icon: Zap, text: "Мгновенный доступ" },
-        { icon: Shield, text: "Надежность" },
+        { icon: Sparkles, text: "Онлайн-голосование" },
+        { icon: Star, text: "32 участницы" },
+        { icon: Shield, text: "Честное голосование" },
       ],
     },
     neon: {
-      badge: "[ ИНИЦИАЛИЗАЦИЯ ]",
-      title: "СИСТЕМНЫЙ",
-      highlight: "ПРОРЫВ",
-      subtitle: "Протокол интерфейса нового поколения. Ломаем барьеры. Переопределяем границы.",
-      cta: "НАЧАТЬ ДОСТУП",
+      badge: "[ ГОЛОСОВАНИЕ СКОРО ]",
+      title: "МИСС И МИССИС",
+      highlight: "КРАСНОКАМЕНСК 2026",
+      subtitle: "Интернет-голосование за участниц конкурса красоты. Твой голос решает всё.",
+      cta: "УВЕДОМИТЬ О СТАРТЕ",
       features: [
-        { icon: Sparkles, text: "КВАНТОВОЕ ЯДРО" },
-        { icon: Zap, text: "ГИПЕРСКОРОСТЬ" },
-        { icon: Shield, text: "ШИФРОВАНИЕ" },
+        { icon: Sparkles, text: "ОНЛАЙН-ГОЛОСОВАНИЕ" },
+        { icon: Star, text: "32 УЧАСТНИЦЫ" },
+        { icon: Shield, text: "ЧЕСТНЫЙ ПОДСЧЁТ" },
       ],
     },
     monochrome: {
-      badge: "Анонс",
-      title: "Изысканная",
-      highlight: "простота",
-      subtitle: "Где форма встречает функцию. Создано с умыслом, спроектировано для эффекта.",
-      cta: "Получить уведомление",
+      badge: "Конкурс 2026",
+      title: "Мисс и Миссис",
+      highlight: "Краснокаменск",
+      subtitle: "Изысканный конкурс красоты и элегантности. Голосуй за свою фаворитку.",
+      cta: "Уведомить меня о старте",
       features: [
-        { icon: Sparkles, text: "Продуманно" },
-        { icon: Zap, text: "Эффективно" },
-        { icon: Shield, text: "Надежно" },
+        { icon: Sparkles, text: "Онлайн-голосование" },
+        { icon: Star, text: "32 участницы" },
+        { icon: Shield, text: "Честное голосование" },
       ],
     },
     glass: {
-      badge: "Превью",
-      title: "За пределами",
-      highlight: "границ",
-      subtitle: "Плавный опыт, который адаптируется под вас. Бесшовно, красиво, интуитивно.",
-      cta: "Запросить доступ",
+      badge: "Голосование открывается скоро",
+      title: "Мисс и Миссис",
+      highlight: "Краснокаменск 2026",
+      subtitle: "Поддержи самую яркую участницу конкурса красоты. Голосование совсем скоро!",
+      cta: "Уведомить меня о старте",
       features: [
-        { icon: Sparkles, text: "Адаптивно" },
-        { icon: Zap, text: "Бесшовно" },
-        { icon: Shield, text: "Безопасно" },
+        { icon: Sparkles, text: "Онлайн-голосование" },
+        { icon: Star, text: "32 участницы" },
+        { icon: Shield, text: "Честное голосование" },
       ],
     },
     terminal: {
-      badge: "> status: pending",
-      title: "$ sudo launch",
-      highlight: "--force",
-      subtitle: "// требуется root доступ. ожидание подтверждения развертывания...",
+      badge: "> конкурс: мисс_краснокаменск_2026",
+      title: "$ vote.start",
+      highlight: "--краснокаменск-2026",
+      subtitle: "// голосование за участниц конкурса. ожидание открытия...",
       cta: "$ subscribe --notify",
       features: [
-        { icon: Sparkles, text: "--optimized" },
-        { icon: Zap, text: "--async" },
-        { icon: Shield, text: "--secure" },
+        { icon: Sparkles, text: "--онлайн" },
+        { icon: Star, text: "--32 участницы" },
+        { icon: Shield, text: "--честно" },
       ],
     },
     luxury: {
-      badge: "Эксклюзивный превью",
-      title: "Открываем",
-      highlight: "совершенство",
+      badge: "Конкурс красоты · 2026",
+      title: "Мисс и Миссис",
+      highlight: "Краснокаменск",
       subtitle:
-        "Для избранных ценителей. Опыт, созданный для тех, кто не соглашается на меньшее.",
-      cta: "Запросить приглашение",
+        "Изысканный конкурс красоты, грации и элегантности. Отдайте голос за достойнейшую.",
+      cta: "Уведомить меня о старте",
       features: [
-        { icon: Sparkles, text: "Уникально" },
-        { icon: Zap, text: "Премиум" },
-        { icon: Shield, text: "Эксклюзив" },
+        { icon: Sparkles, text: "Онлайн-голосование" },
+        { icon: Star, text: "32 участницы" },
+        { icon: Shield, text: "Честное голосование" },
       ],
     },
   }
@@ -246,7 +246,7 @@ export function LandingPage() {
                 themeConfig.fontClass,
               )}
             >
-              {theme === "terminal" ? "// time_remaining:" : "До запуска"}
+              {theme === "terminal" ? "// time_remaining:" : "До открытия голосования"}
             </p>
             <ThemedCountdown targetDate={targetDate} />
             <button
@@ -383,7 +383,7 @@ export function LandingPage() {
           >
             <Input
               type="email"
-              placeholder={theme === "terminal" ? "your@email.sh" : "Введите email"}
+              placeholder={theme === "terminal" ? "your@email.sh" : "Введите email для уведомления"}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className={cn(
@@ -483,7 +483,7 @@ export function LandingPage() {
                 ))}
               </div>
               <span className="text-[10px] sm:text-xs">
-                {theme === "terminal" ? "// 2847 users_waiting" : "Уже 2 847+ в очереди"}
+                {theme === "terminal" ? "// 1240 voters_ready" : "Уже 1 240+ готовы голосовать"}
               </span>
             </div>
           </div>
@@ -502,7 +502,7 @@ export function LandingPage() {
         <p className="text-xs sm:text-sm">
           {theme === "terminal"
             ? "© 2025 // launchpad_inc | privacy --policy | terms --conditions"
-            : "© 2025 LaunchPad Inc. · Политика конфиденциальности · Условия"}
+            : "© 2026 Мисс и Миссис Краснокаменск · Конкурс красоты и элегантности"}
         </p>
       </footer>
     </div>
