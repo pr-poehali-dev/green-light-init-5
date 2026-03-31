@@ -13,9 +13,7 @@ export function LandingPage() {
   const themeConfig = themes[theme]
 
   const [targetDate, setTargetDate] = useState<Date>(() => {
-    const date = new Date()
-    date.setDate(date.getDate() + 7)
-    return date
+    return new Date("2026-04-20T23:59:59")
   })
 
   const [days, setDays] = useState("7")
@@ -246,7 +244,7 @@ export function LandingPage() {
                 themeConfig.fontClass,
               )}
             >
-              {theme === "terminal" ? "// time_remaining:" : "До открытия голосования"}
+              {theme === "terminal" ? "// time_remaining:" : "До окончания приёма заявок"}
             </p>
             <ThemedCountdown targetDate={targetDate} />
             <button
