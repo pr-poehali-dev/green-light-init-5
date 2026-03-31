@@ -22,26 +22,47 @@ export function LandingPage() {
   const [minutes, setMinutes] = useState("0")
   const [seconds, setSeconds] = useState("0")
   const [showSettings, setShowSettings] = useState(false)
-  const [form, setForm] = useState({ name: "", age: "", phone: "", email: "", category: "", about: "" })
+  const [activeTab, setActiveTab] = useState<"miss" | "missus">("miss")
+  const emptyForm = { name: "", age: "", phone: "", email: "", about: "" }
+  const [form, setForm] = useState(emptyForm)
   const [formStatus, setFormStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+  const [ageError, setAgeError] = useState("")
 
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setForm((prev) => ({ ...prev, [name]: value }))
+    if (name === "age") {
+      const age = Number(value)
+      if (activeTab === "miss" && value && (age < 18 || age > 30)) {
+        setAgeError("Категория Мисс: возраст от 18 до 30 лет")
+      } else if (activeTab === "missus" && value && (age < 25 || age > 45)) {
+        setAgeError("Категория Миссис: возраст от 25 до 45 лет")
+      } else {
+        setAgeError("")
+      }
+    }
+  }
+
+  const handleTabChange = (tab: "miss" | "missus") => {
+    setActiveTab(tab)
+    setForm(emptyForm)
+    setAgeError("")
+    setFormStatus("idle")
   }
 
   const handleSubmit = async () => {
-    if (!form.name || !form.phone) return
+    if (!form.name || !form.phone || ageError) return
     setFormStatus("loading")
     try {
       const res = await fetch("https://functions.poehali.dev/b7548504-a532-4f31-a3d5-72a96123996e", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, category: activeTab === "miss" ? "Мисс" : "Миссис" }),
       })
       const data = await res.json()
       if (data.success) {
         setFormStatus("success")
-        setForm({ name: "", age: "", phone: "", email: "", category: "", about: "" })
+        setForm(emptyForm)
       } else {
         setFormStatus("error")
       }
@@ -409,8 +430,34 @@ export function LandingPage() {
             )}
           >
             <p className={cn("text-sm font-semibold text-center", themeConfig.cardForeground, themeConfig.fontClass)}>
-              {theme === "terminal" ? "// подать заявку на участие" : "Подать заявку на участие"}
+              Подать заявку на участие
             </p>
+
+            {/* Category tabs */}
+            <div className={cn("grid grid-cols-2 rounded-xl p-1 gap-1", themeConfig.muted)}>
+              {(["miss", "missus"] as const).map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => handleTabChange(tab)}
+                  className={cn(
+                    "py-2 rounded-lg text-sm font-semibold transition-all duration-200",
+                    activeTab === tab
+                      ? cn(themeConfig.accent, themeConfig.accentForeground, theme === "neon" && "shadow-[0_0_15px_rgba(34,211,238,0.4)]", theme === "luxury" && "shadow-[0_0_15px_rgba(251,191,36,0.3)]")
+                      : cn(themeConfig.mutedForeground, "hover:opacity-80"),
+                    themeConfig.fontClass,
+                  )}
+                >
+                  {tab === "miss" ? "👑 Мисс" : "💍 Миссис"}
+                </button>
+              ))}
+            </div>
+
+            {/* Category description */}
+            <div className={cn("text-xs text-center px-2 py-2 rounded-lg", themeConfig.muted, themeConfig.mutedForeground, themeConfig.fontClass)}>
+              {activeTab === "miss"
+                ? "Незамужние девушки без детей · 18–30 лет"
+                : "Замужние и/или имеющие детей · 25–45 лет"}
+            </div>
 
             {formStatus === "success" ? (
               <div className={cn("text-center py-6 space-y-2", themeConfig.cardForeground, themeConfig.fontClass)}>
@@ -428,9 +475,12 @@ export function LandingPage() {
                       className={cn("text-sm", themeConfig.muted, themeConfig.cardForeground, themeConfig.border, themeConfig.fontClass, "placeholder:opacity-40")} />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <Label className={cn("text-xs", themeConfig.mutedForeground, themeConfig.fontClass)}>Возраст</Label>
-                    <Input name="age" value={form.age} onChange={handleFormChange} placeholder="25"
-                      className={cn("text-sm", themeConfig.muted, themeConfig.cardForeground, themeConfig.border, themeConfig.fontClass, "placeholder:opacity-40")} />
+                    <Label className={cn("text-xs", themeConfig.mutedForeground, themeConfig.fontClass)}>
+                      Возраст {activeTab === "miss" ? "(18–30)" : "(25–45)"}
+                    </Label>
+                    <Input name="age" value={form.age} onChange={handleFormChange} placeholder={activeTab === "miss" ? "18–30" : "25–45"} type="number"
+                      className={cn("text-sm", themeConfig.muted, themeConfig.cardForeground, themeConfig.border, themeConfig.fontClass, "placeholder:opacity-40", ageError && "border-red-400")} />
+                    {ageError && <p className="text-xs text-red-400">{ageError}</p>}
                   </div>
                   <div className="flex flex-col gap-1.5">
                     <Label className={cn("text-xs", themeConfig.mutedForeground, themeConfig.fontClass)}>Телефон *</Label>
@@ -444,15 +494,6 @@ export function LandingPage() {
                   </div>
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <Label className={cn("text-xs", themeConfig.mutedForeground, themeConfig.fontClass)}>Категория</Label>
-                  <select name="category" value={form.category} onChange={handleFormChange}
-                    className={cn("w-full rounded-md border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-offset-0", themeConfig.muted, themeConfig.cardForeground, themeConfig.border, themeConfig.fontClass)}>
-                    <option value="">— выберите категорию —</option>
-                    <option value="Мисс">Мисс</option>
-                    <option value="Миссис">Миссис</option>
-                  </select>
-                </div>
-                <div className="flex flex-col gap-1.5">
                   <Label className={cn("text-xs", themeConfig.mutedForeground, themeConfig.fontClass)}>Расскажите о себе</Label>
                   <Textarea name="about" value={form.about} onChange={handleFormChange} placeholder="Увлечения, достижения, мечты..." rows={3}
                     className={cn("text-sm resize-none", themeConfig.muted, themeConfig.cardForeground, themeConfig.border, themeConfig.fontClass, "placeholder:opacity-40")} />
@@ -462,7 +503,7 @@ export function LandingPage() {
                 )}
                 <button
                   onClick={handleSubmit}
-                  disabled={formStatus === "loading" || !form.name || !form.phone}
+                  disabled={formStatus === "loading" || !form.name || !form.phone || !!ageError}
                   className={cn(
                     "w-full py-3 font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-sm rounded-xl",
                     "hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed",
