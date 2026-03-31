@@ -201,6 +201,16 @@ export function LandingPage() {
             {currentContent.badge}
           </div>
 
+          {/* Crown */}
+          <div className="flex justify-center">
+            <img
+              src="https://cdn.poehali.dev/projects/a9c62102-7235-42c6-a141-66004f7200f2/files/5c56d1bf-410f-4adc-830e-6504a2d6efdb.jpg"
+              alt="Корона"
+              className="w-24 sm:w-32 md:w-40 drop-shadow-2xl select-none"
+              style={{ filter: theme === "neon" ? "drop-shadow(0 0 16px rgba(34,211,238,0.7))" : theme === "luxury" ? "drop-shadow(0 0 16px rgba(251,191,36,0.6))" : "drop-shadow(0 4px 16px rgba(0,0,0,0.25))" }}
+            />
+          </div>
+
           {/* Main Headline */}
           <div className="text-center space-y-3 sm:space-y-4">
             <h1
