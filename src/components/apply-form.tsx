@@ -42,7 +42,7 @@ export function ApplyForm({
         themeConfig.shadow,
         theme === "glass" && "backdrop-blur-xl bg-white/40",
         theme === "neon" && "shadow-[0_0_30px_rgba(34,211,238,0.15)]",
-        theme === "luxury" && "shadow-[0_0_30px_rgba(251,191,36,0.1)]",
+        theme === "luxury" && "shadow-[0_0_30px_rgba(200,210,220,0.1)]",
       )}
     >
       <p className={cn("text-sm font-semibold text-center", themeConfig.cardForeground, themeConfig.fontClass)}>
@@ -150,7 +150,7 @@ export function ApplyForm({
               themeConfig.accentForeground,
               themeConfig.fontClass,
               theme === "neon" && "shadow-[0_0_25px_rgba(34,211,238,0.5)]",
-              theme === "luxury" && "shadow-[0_0_25px_rgba(251,191,36,0.3)]",
+              theme === "luxury" && "shadow-[0_0_25px_rgba(200,210,220,0.3)]",
             )}
           >
             {formStatus === "loading" ? "Отправляем..." : "Подать заявку"}

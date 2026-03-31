@@ -123,7 +123,20 @@ export function LandingPage() {
       )}
       {theme === "luxury" && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/3 left-1/2 w-[800px] h-[400px] bg-gradient-to-r from-amber-500/5 via-yellow-500/10 to-amber-500/5 rounded-full blur-3xl -translate-x-1/2" />
+          <div className="absolute top-1/3 left-1/2 w-[800px] h-[400px] bg-gradient-to-r from-slate-500/5 via-slate-300/8 to-slate-500/5 rounded-full blur-3xl -translate-x-1/2" />
+          <img
+            src="https://cdn.poehali.dev/projects/a9c62102-7235-42c6-a141-66004f7200f2/bucket/adaff1de-d6c9-45f1-9edd-f445b938a23d.jpeg"
+            alt=""
+            aria-hidden="true"
+            className="absolute left-1/2 -translate-x-1/2 select-none"
+            style={{
+              top: "60px",
+              width: "260px",
+              mixBlendMode: "screen",
+              filter: "grayscale(1) brightness(1.8) contrast(1.1) drop-shadow(0 0 24px rgba(200,210,220,0.35))",
+              opacity: 0.9,
+            }}
+          />
         </div>
       )}
 

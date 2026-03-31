@@ -86,10 +86,10 @@ export function ContestantsSection() {
         {contestants.length > 0 && (
           <div className={cn("rounded-2xl border p-5 sm:p-6", themeConfig.card, themeConfig.border, themeConfig.shadow,
             theme === "neon" && "shadow-[0_0_30px_rgba(34,211,238,0.15)]",
-            theme === "luxury" && "shadow-[0_0_30px_rgba(251,191,36,0.1)]",
+            theme === "luxury" && "shadow-[0_0_30px_rgba(200,210,220,0.1)]",
           )}>
             <div className="flex items-center gap-2 mb-5">
-              <Icon name="Trophy" className={cn("w-5 h-5", theme === "luxury" ? "text-amber-400" : theme === "neon" ? "text-cyan-400" : "")} />
+              <Icon name="Trophy" className={cn("w-5 h-5", theme === "luxury" ? "text-slate-300" : theme === "neon" ? "text-cyan-400" : "")} />
               <h2 className={cn("text-lg font-bold", themeConfig.cardForeground)}>Лидеры голосования</h2>
             </div>
             <div className="flex flex-col gap-2">
@@ -107,7 +107,7 @@ export function ContestantsSection() {
                     <p className={cn("text-sm font-medium truncate", themeConfig.cardForeground)}>{c.name}</p>
                     <p className={cn("text-xs", themeConfig.mutedForeground)}>{c.category}</p>
                   </div>
-                  <span className={cn("text-sm font-bold shrink-0", theme === "luxury" ? "text-amber-400" : theme === "neon" ? "text-cyan-400" : themeConfig.cardForeground)}>
+                  <span className={cn("text-sm font-bold shrink-0", theme === "luxury" ? "text-slate-300" : theme === "neon" ? "text-cyan-400" : themeConfig.cardForeground)}>
                     {c.votes} {getVoteWord(c.votes)}
                   </span>
                 </div>
@@ -175,7 +175,7 @@ export function ContestantsSection() {
                   "rounded-2xl border flex flex-col overflow-hidden transition-all hover:scale-[1.01]",
                   inputClass,
                   theme === "neon" && "hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]",
-                  theme === "luxury" && "hover:shadow-[0_0_20px_rgba(251,191,36,0.15)]",
+                  theme === "luxury" && "hover:shadow-[0_0_20px_rgba(200,210,220,0.15)]",
                 )}>
                   {/* Photos */}
                   <div className="grid grid-cols-3 h-44 overflow-hidden">
@@ -205,7 +205,7 @@ export function ContestantsSection() {
                         </p>
                       </div>
                       <div className={cn("text-right shrink-0")}>
-                        <p className={cn("text-lg font-bold", theme === "luxury" ? "text-amber-400" : theme === "neon" ? "text-cyan-400" : themeConfig.cardForeground)}>{c.votes}</p>
+                        <p className={cn("text-lg font-bold", theme === "luxury" ? "text-slate-300" : theme === "neon" ? "text-cyan-400" : themeConfig.cardForeground)}>{c.votes}</p>
                         <p className={cn("text-xs", themeConfig.mutedForeground)}>{getVoteWord(c.votes)}</p>
                       </div>
                     </div>
@@ -224,7 +224,7 @@ export function ContestantsSection() {
                           ? cn(themeConfig.muted, themeConfig.mutedForeground)
                           : cn(themeConfig.accent, themeConfig.accentForeground),
                         theme === "neon" && !alreadyVoted && "shadow-[0_0_15px_rgba(34,211,238,0.4)]",
-                        theme === "luxury" && !alreadyVoted && "shadow-[0_0_15px_rgba(251,191,36,0.3)]",
+                        theme === "luxury" && !alreadyVoted && "shadow-[0_0_15px_rgba(200,210,220,0.3)]",
                       )}
                     >
                       {!votingOpen ? (

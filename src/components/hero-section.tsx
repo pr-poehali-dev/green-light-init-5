@@ -63,30 +63,32 @@ export function HeroSection({
             themeConfig.mutedForeground,
             themeConfig.fontClass,
             theme === "neon" && "shadow-[0_0_15px_rgba(34,211,238,0.3)] border-cyan-500/50",
-            theme === "luxury" && "border-amber-500/30",
+            theme === "luxury" && "border-slate-400/30",
           )}
         >
           <Bell className="w-3 h-3 sm:w-4 sm:h-4" />
           {currentContent.badge}
         </div>
 
-        {/* Crown */}
-        <div className="flex justify-center -mb-4">
-          <img
-            src="https://cdn.poehali.dev/projects/a9c62102-7235-42c6-a141-66004f7200f2/bucket/adaff1de-d6c9-45f1-9edd-f445b938a23d.jpeg"
-            alt="Корона"
-            className="select-none pointer-events-none"
-            style={{
-              width: theme === "luxury" ? "220px" : "180px",
-              mixBlendMode: (theme === "dark" || theme === "neon" || theme === "terminal") ? "screen" : "multiply",
-              filter: theme === "luxury"
-                ? "invert(1) sepia(1) saturate(3) hue-rotate(5deg) brightness(1.1) drop-shadow(0 0 18px rgba(251,191,36,0.5))"
-                : theme === "dark" || theme === "neon" || theme === "terminal"
-                ? "invert(1) brightness(1.5)"
-                : "drop-shadow(0 2px 8px rgba(0,0,0,0.15))",
-            }}
-          />
-        </div>
+        {/* Crown — shown for non-luxury themes only (luxury has it in bg) */}
+        {theme !== "luxury" && (
+          <div className="flex justify-center -mb-4">
+            <img
+              src="https://cdn.poehali.dev/projects/a9c62102-7235-42c6-a141-66004f7200f2/bucket/adaff1de-d6c9-45f1-9edd-f445b938a23d.jpeg"
+              alt="Корона"
+              className="select-none pointer-events-none"
+              style={{
+                width: "180px",
+                mixBlendMode: (theme === "dark" || theme === "neon" || theme === "terminal") ? "screen" : "multiply",
+                filter: theme === "dark" || theme === "neon" || theme === "terminal"
+                  ? "invert(1) brightness(1.5)"
+                  : "drop-shadow(0 2px 8px rgba(0,0,0,0.15))",
+              }}
+            />
+          </div>
+        )}
+        {/* Spacer for luxury to offset background crown */}
+        {theme === "luxury" && <div className="h-40 sm:h-48" />}
 
         {/* Main Headline */}
         <div className="text-center space-y-3 sm:space-y-4">
@@ -103,7 +105,7 @@ export function HeroSection({
                 "relative inline-block",
                 theme === "neon" && "text-cyan-400 [text-shadow:0_0_40px_rgba(34,211,238,0.6)]",
                 theme === "luxury" &&
-                  "bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-200 bg-clip-text text-transparent",
+                  "bg-gradient-to-r from-slate-300 via-white to-slate-300 bg-clip-text text-transparent",
                 theme === "glass" && "bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent",
                 theme === "retro" && "text-amber-700",
                 theme === "terminal" && "text-green-300",
@@ -194,7 +196,7 @@ export function HeroSection({
                 themeConfig.accentForeground,
                 themeConfig.fontClass,
                 theme === "neon" && "shadow-[0_0_20px_rgba(34,211,238,0.5)]",
-                theme === "luxury" && "shadow-[0_0_20px_rgba(251,191,36,0.3)]",
+                theme === "luxury" && "shadow-[0_0_20px_rgba(200,210,220,0.3)]",
               )}
             >
               {theme === "terminal" ? "execute()" : "Задать"}
@@ -234,7 +236,7 @@ export function HeroSection({
                 className={cn(
                   "w-3.5 h-3.5 sm:w-4 sm:h-4",
                   theme === "neon" && "text-cyan-400",
-                  theme === "luxury" && "text-amber-400",
+                  theme === "luxury" && "text-slate-300",
                   theme === "glass" && "text-indigo-500",
                 )}
               />
@@ -279,7 +281,7 @@ export function HeroSection({
                   key={i}
                   className={cn(
                     "w-3 h-3 sm:w-3.5 sm:h-3.5 fill-current",
-                    theme === "luxury" && "text-amber-400",
+                    theme === "luxury" && "text-slate-300",
                     theme === "neon" && "text-cyan-400",
                     theme === "retro" && "text-amber-600",
                     (theme === "minimal-light" ||

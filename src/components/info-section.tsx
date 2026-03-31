@@ -35,7 +35,7 @@ export function InfoSection() {
   const t = themes[theme]
 
   const accentText = cn(
-    theme === "luxury" && "text-amber-400",
+    theme === "luxury" && "text-slate-300",
     theme === "neon" && "text-cyan-400",
     theme === "glass" && "text-indigo-500",
     theme === "retro" && "text-amber-700",
@@ -60,7 +60,7 @@ export function InfoSection() {
           "rounded-2xl border p-6 sm:p-8 flex flex-col gap-4",
           t.card, t.border, t.shadow,
           theme === "neon" && "shadow-[0_0_30px_rgba(34,211,238,0.1)]",
-          theme === "luxury" && "shadow-[0_0_30px_rgba(251,191,36,0.08)]",
+          theme === "luxury" && "shadow-[0_0_30px_rgba(200,210,220,0.08)]",
         )}>
           <div className="flex items-start gap-3">
             <Icon name="Sparkles" className={cn("w-5 h-5 mt-0.5 shrink-0", accentText)} />
@@ -85,13 +85,13 @@ export function InfoSection() {
                   <div className={cn(
                     "w-9 h-9 rounded-full border-2 flex items-center justify-center shrink-0 z-10",
                     t.card, t.border,
-                    theme === "luxury" && "border-amber-500/50",
+                    theme === "luxury" && "border-slate-400/50",
                     theme === "neon" && "border-cyan-500/50",
                   )}>
                     <Icon name={step.icon} className={cn("w-4 h-4", accentText)} />
                   </div>
                   {i < steps.length - 1 && (
-                    <div className={cn("w-px flex-1 my-1", theme === "luxury" ? "bg-amber-500/20" : theme === "neon" ? "bg-cyan-500/20" : t.border, "border-l border-dashed")} />
+                    <div className={cn("w-px flex-1 my-1", theme === "luxury" ? "bg-slate-400/20" : theme === "neon" ? "bg-cyan-500/20" : t.border, "border-l border-dashed")} />
                   )}
                 </div>
 
@@ -114,7 +114,7 @@ export function InfoSection() {
         <div className={cn(
           "rounded-2xl border p-5 flex flex-col sm:flex-row items-center justify-between gap-4",
           t.card, t.border,
-          theme === "luxury" && "border-amber-500/30",
+          theme === "luxury" && "border-slate-400/30",
           theme === "neon" && "border-cyan-500/20",
         )}>
           <div>
@@ -128,7 +128,7 @@ export function InfoSection() {
               "shrink-0 px-6 py-2.5 rounded-xl text-sm font-semibold transition-all hover:scale-105",
               t.accent, t.accentForeground,
               theme === "neon" && "shadow-[0_0_20px_rgba(34,211,238,0.4)]",
-              theme === "luxury" && "shadow-[0_0_20px_rgba(251,191,36,0.3)]",
+              theme === "luxury" && "shadow-[0_0_20px_rgba(200,210,220,0.3)]",
             )}
           >
             Подать заявку
