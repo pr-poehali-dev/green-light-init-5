@@ -278,6 +278,24 @@ export function LandingPage() {
             {currentContent.badge}
           </div>
 
+          {/* Crown */}
+          <div className="flex justify-center -mb-4">
+            <img
+              src="https://cdn.poehali.dev/projects/a9c62102-7235-42c6-a141-66004f7200f2/bucket/adaff1de-d6c9-45f1-9edd-f445b938a23d.jpeg"
+              alt="Корона"
+              className="select-none pointer-events-none"
+              style={{
+                width: theme === "luxury" ? "220px" : "180px",
+                mixBlendMode: (theme === "dark" || theme === "neon" || theme === "terminal") ? "screen" : "multiply",
+                filter: theme === "luxury"
+                  ? "invert(1) sepia(1) saturate(3) hue-rotate(5deg) brightness(1.1) drop-shadow(0 0 18px rgba(251,191,36,0.5))"
+                  : theme === "dark" || theme === "neon" || theme === "terminal"
+                  ? "invert(1) brightness(1.5)"
+                  : "drop-shadow(0 2px 8px rgba(0,0,0,0.15))",
+              }}
+            />
+          </div>
+
           {/* Main Headline */}
           <div className="text-center space-y-3 sm:space-y-4">
             <h1
