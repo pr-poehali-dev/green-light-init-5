@@ -1,3 +1,5 @@
 {
+  "get-contestants": "https://functions.poehali.dev/611c34b9-f1c1-44b3-b99d-f8f3198e92c8",
+  "vote": "https://functions.poehali.dev/e12c6252-777d-43da-9e53-21e165ef9e01",
   "send-application": "https://functions.poehali.dev/b7548504-a532-4f31-a3d5-72a96123996e"
 }

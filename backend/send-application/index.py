@@ -6,6 +6,7 @@ import hmac
 import hashlib
 import datetime
 import urllib.request
+import psycopg2
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
@@ -173,6 +174,22 @@ def handler(event: dict, context) -> dict:
     with smtplib.SMTP_SSL('smtp.internet.ru', 465) as server:
         server.login(sender, smtp_password)
         server.sendmail(sender, recipient, msg.as_string())
+
+    conn = psycopg2.connect(os.environ['DATABASE_URL'])
+    cur = conn.cursor()
+    schema = os.environ.get('MAIN_DB_SCHEMA', 'public')
+    age_val = int(age) if age else None
+    cur.execute(
+        f"INSERT INTO {schema}.contestants (name, age, phone, email, category, about, photo1_url, photo2_url, photo3_url) "
+        f"VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+        (name, age_val, phone, email or None, category, about or None,
+         photo_urls[0] if len(photo_urls) > 0 else None,
+         photo_urls[1] if len(photo_urls) > 1 else None,
+         photo_urls[2] if len(photo_urls) > 2 else None)
+    )
+    conn.commit()
+    cur.close()
+    conn.close()
 
     return {
         'statusCode': 200,

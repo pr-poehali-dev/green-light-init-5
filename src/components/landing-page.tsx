@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { ArrowRight, Bell, Sparkles, Zap, Shield, Star } from "lucide-react"
+import { ContestantsSection } from "./contestants-section"
 
 export function LandingPage() {
   const { theme } = useTheme()
@@ -677,6 +678,9 @@ export function LandingPage() {
           </div>
         </div>
       </main>
+
+      {/* Contestants & Voting */}
+      <ContestantsSection />
 
       {/* Footer */}
       <footer
