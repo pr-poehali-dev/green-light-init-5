@@ -37,10 +37,8 @@ export function LandingPage() {
     setForm((prev) => ({ ...prev, [name]: value }))
     if (name === "age") {
       const age = Number(value)
-      if (activeTab === "miss" && value && (age < 18 || age > 35)) {
-        setAgeError("Категория Мисс: возраст от 18 до 35 лет")
-      } else if (activeTab === "missus" && value && (age < 18 || age > 45)) {
-        setAgeError("Категория Миссис: возраст от 18 до 45 лет")
+      if (value && age < 18) {
+        setAgeError("Участие возможно только с 18 лет")
       } else {
         setAgeError("")
       }
@@ -83,7 +81,7 @@ export function LandingPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...form,
-          category: activeTab === "miss" ? "Мисс" : "Миссис",
+          category: "Мисс",
           photos: photos.map((p) => p.preview),
           consentPersonal,
           consentPhotos,
@@ -128,7 +126,7 @@ export function LandingPage() {
   > = {
     "minimal-light": {
       badge: "Голосование открывается скоро",
-      title: "Мисс и Миссис Интернет",
+      title: "Мисс Интернет",
       highlight: "Краснокаменск 2026",
       subtitle:
         "Интернет-голосование за самых ярких участниц конкурса красоты и элегантности. Поддержи свою фаворитку!",
@@ -141,7 +139,7 @@ export function LandingPage() {
     },
     dark: {
       badge: "Голосование скоро",
-      title: "Мисс и Миссис Интернет",
+      title: "Мисс Интернет",
       highlight: "Краснокаменск 2026",
       subtitle: "Реши судьбу конкурса — голосуй за самых достойных. Каждый голос важен.",
       cta: "Уведомить меня о старте",
@@ -153,7 +151,7 @@ export function LandingPage() {
     },
     retro: {
       badge: "Конкурс красоты 2026",
-      title: "Мисс и Миссис Интернет",
+      title: "Мисс Интернет",
       highlight: "Краснокаменск 2026",
       subtitle: "Традиционный конкурс красоты и элегантности. Поддержи участницу своим голосом!",
       cta: "Уведомить меня о старте",
@@ -165,7 +163,7 @@ export function LandingPage() {
     },
     neon: {
       badge: "[ ГОЛОСОВАНИЕ СКОРО ]",
-      title: "МИСС И МИССИС ИНТЕРНЕТ",
+      title: "МИСС ИНТЕРНЕТ",
       highlight: "КРАСНОКАМЕНСК 2026",
       subtitle: "Интернет-голосование за участниц конкурса красоты. Твой голос решает всё.",
       cta: "УВЕДОМИТЬ О СТАРТЕ",
@@ -177,7 +175,7 @@ export function LandingPage() {
     },
     monochrome: {
       badge: "Конкурс 2026",
-      title: "Мисс и Миссис Интернет",
+      title: "Мисс Интернет",
       highlight: "Краснокаменск 2026",
       subtitle: "Изысканный конкурс красоты и элегантности. Голосуй за свою фаворитку.",
       cta: "Уведомить меня о старте",
@@ -189,7 +187,7 @@ export function LandingPage() {
     },
     glass: {
       badge: "Голосование открывается скоро",
-      title: "Мисс и Миссис Интернет",
+      title: "Мисс Интернет",
       highlight: "Краснокаменск 2026",
       subtitle: "Поддержи самую яркую участницу конкурса красоты. Голосование совсем скоро!",
       cta: "Уведомить меня о старте",
@@ -213,7 +211,7 @@ export function LandingPage() {
     },
     luxury: {
       badge: "Конкурс красоты · 2026",
-      title: "Мисс и Миссис Интернет",
+      title: "Мисс Интернет",
       highlight: "Краснокаменск 2026",
       subtitle:
         "Изысканный конкурс красоты, грации и элегантности. Отдайте голос за достойнейшую.",
@@ -466,30 +464,9 @@ export function LandingPage() {
               Подать заявку на участие
             </p>
 
-            {/* Category tabs */}
-            <div className={cn("grid grid-cols-2 rounded-xl p-1 gap-1", themeConfig.muted)}>
-              {(["miss", "missus"] as const).map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => handleTabChange(tab)}
-                  className={cn(
-                    "py-2 rounded-lg text-sm font-semibold transition-all duration-200",
-                    activeTab === tab
-                      ? cn(themeConfig.accent, themeConfig.accentForeground, theme === "neon" && "shadow-[0_0_15px_rgba(34,211,238,0.4)]", theme === "luxury" && "shadow-[0_0_15px_rgba(251,191,36,0.3)]")
-                      : cn(themeConfig.mutedForeground, "hover:opacity-80"),
-                    themeConfig.fontClass,
-                  )}
-                >
-                  {tab === "miss" ? "👑 Мисс" : "💍 Миссис"}
-                </button>
-              ))}
-            </div>
-
             {/* Category description */}
-            <div className={cn("text-xs text-center px-2 py-2 rounded-lg", themeConfig.muted, themeConfig.mutedForeground, themeConfig.fontClass)}>
-              {activeTab === "miss"
-                ? "Незамужние девушки · 18–35 лет"
-                : "Замужние девушки и женщины · 18–45 лет"}
+            <div className={cn("text-xs text-center px-3 py-2 rounded-lg", themeConfig.muted, themeConfig.mutedForeground, themeConfig.fontClass)}>
+              👑 Мисс · девушки старше 18 лет
             </div>
 
             {formStatus === "success" ? (
@@ -509,9 +486,9 @@ export function LandingPage() {
                   </div>
                   <div className="flex flex-col gap-1.5">
                     <Label className={cn("text-xs", themeConfig.mutedForeground, themeConfig.fontClass)}>
-                      Возраст {activeTab === "miss" ? "(18–35)" : "(18–45)"}
+                      Возраст (от 18 лет)
                     </Label>
-                    <Input name="age" value={form.age} onChange={handleFormChange} placeholder={activeTab === "miss" ? "18–35" : "18–45"} type="number"
+                    <Input name="age" value={form.age} onChange={handleFormChange} placeholder="от 18" type="number"
                       className={cn("text-sm", themeConfig.muted, themeConfig.cardForeground, themeConfig.border, themeConfig.fontClass, "placeholder:opacity-40", ageError && "border-red-400")} />
                     {ageError && <p className="text-xs text-red-400">{ageError}</p>}
                   </div>
@@ -694,7 +671,7 @@ export function LandingPage() {
         <p className="text-xs sm:text-sm">
           {theme === "terminal"
             ? "© 2025 // launchpad_inc | privacy --policy | terms --conditions"
-            : "© 2026 Мисс и Миссис Краснокаменск · Конкурс красоты и элегантности"}
+            : "© 2026 Мисс Интернет Краснокаменск · Конкурс красоты и элегантности"}
         </p>
       </footer>
     </div>

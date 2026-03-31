@@ -139,7 +139,7 @@ def handler(event: dict, context) -> dict:
 
     html = f"""
     <html><body style="font-family:Arial,sans-serif;color:#333;max-width:640px;">
-      <h2 style="color:#9b59b6;">&#128081; Новая заявка &mdash; Мисс и Миссис Интернет Краснокаменск 2026</h2>
+      <h2 style="color:#9b59b6;">&#128081; Новая заявка &mdash; Мисс Интернет Краснокаменск 2026</h2>
       <table style="width:100%;border-collapse:collapse;margin-bottom:16px;">
         <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;width:160px;">Категория</td><td style="padding:8px;border-bottom:1px solid #eee;"><b>{category}</b></td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Имя</td><td style="padding:8px;border-bottom:1px solid #eee;">{name}</td></tr>
