@@ -69,20 +69,7 @@ export function InfoSection() {
               Для участия в проекте нужно заполнить анкету и загрузить свои фотографии.
             </p>
           </div>
-          <div className={cn("flex items-center gap-3 px-4 py-3 rounded-xl", t.muted)}>
-            <Icon name="Globe" className={cn("w-4 h-4 shrink-0", accentText)} />
-            <div>
-              <p className={cn("text-xs", t.mutedForeground)}>Официальный сайт конкурса</p>
-              <a
-                href="http://miss.zab.ru/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn("text-sm font-medium hover:underline", accentText)}
-              >
-                miss.zab.ru
-              </a>
-            </div>
-          </div>
+
         </div>
 
         {/* Timeline */}
