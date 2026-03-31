@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { ArrowRight, Bell, Sparkles, Zap, Shield, Star } from "lucide-react"
 import { ContestantsSection } from "./contestants-section"
+import { InfoSection } from "./info-section"
 
 export function LandingPage() {
   const { theme } = useTheme()
@@ -23,6 +24,7 @@ export function LandingPage() {
   const [minutes, setMinutes] = useState("0")
   const [seconds, setSeconds] = useState("0")
   const [showSettings, setShowSettings] = useState(false)
+  const [activeSection, setActiveSection] = useState<"info" | "vote" | "apply">("info")
   const [activeTab, setActiveTab] = useState<"miss" | "missus">("miss")
   const emptyForm = { name: "", age: "", phone: "", email: "", about: "" }
   const [form, setForm] = useState(emptyForm)
@@ -468,6 +470,7 @@ export function LandingPage() {
 
           {/* Application Form */}
           <div
+            id="apply-form"
             className={cn(
               "w-full max-w-lg flex flex-col gap-4 p-5 sm:p-6 rounded-2xl border transition-all",
               themeConfig.card,
@@ -674,8 +677,41 @@ export function LandingPage() {
         </div>
       </main>
 
-      {/* Contestants & Voting */}
-      <ContestantsSection />
+      {/* Section Tabs */}
+      <div className={cn("relative z-10 w-full border-t", themeConfig.border)}>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-6">
+          <div className={cn("flex gap-1 p-1 rounded-2xl w-full sm:w-fit mx-auto", themeConfig.muted)}>
+            {([
+              { key: "info", label: "Информация" },
+              { key: "vote", label: "Участницы" },
+              { key: "apply", label: "Подать заявку" },
+            ] as const).map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveSection(tab.key)}
+                className={cn(
+                  "flex-1 sm:flex-none px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200",
+                  themeConfig.fontClass,
+                  activeSection === tab.key
+                    ? cn(themeConfig.accent, themeConfig.accentForeground,
+                        theme === "neon" && "shadow-[0_0_15px_rgba(34,211,238,0.4)]",
+                        theme === "luxury" && "shadow-[0_0_15px_rgba(251,191,36,0.3)]")
+                    : cn(themeConfig.mutedForeground, "hover:opacity-80"),
+                )}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {activeSection === "info" && <InfoSection />}
+      {activeSection === "vote" && <ContestantsSection />}
+      {activeSection === "apply" && (() => {
+        setTimeout(() => document.getElementById("apply-form")?.scrollIntoView({ behavior: "smooth", block: "center" }), 50)
+        return null
+      })()}
 
       {/* Footer */}
       <footer
