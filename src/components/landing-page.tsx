@@ -6,6 +6,7 @@ import { themes, type ThemeMode } from "@/lib/themes"
 import { cn } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 import { ArrowRight, Bell, Sparkles, Zap, Shield, Star } from "lucide-react"
 
 export function LandingPage() {
@@ -20,8 +21,34 @@ export function LandingPage() {
   const [hours, setHours] = useState("0")
   const [minutes, setMinutes] = useState("0")
   const [seconds, setSeconds] = useState("0")
-  const [email, setEmail] = useState("")
   const [showSettings, setShowSettings] = useState(false)
+  const [form, setForm] = useState({ name: "", age: "", phone: "", email: "", category: "", about: "" })
+  const [formStatus, setFormStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  const handleSubmit = async () => {
+    if (!form.name || !form.phone) return
+    setFormStatus("loading")
+    try {
+      const res = await fetch("https://functions.poehali.dev/b7548504-a532-4f31-a3d5-72a96123996e", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setFormStatus("success")
+        setForm({ name: "", age: "", phone: "", email: "", category: "", about: "" })
+      } else {
+        setFormStatus("error")
+      }
+    } catch {
+      setFormStatus("error")
+    }
+  }
 
   const handleSetTimer = () => {
     const newTarget = new Date()
@@ -369,42 +396,88 @@ export function LandingPage() {
             </div>
           )}
 
-          {/* Email Signup */}
+          {/* Application Form */}
           <div
             className={cn(
-              "w-full max-w-md flex flex-col gap-2 sm:gap-3 p-2 rounded-2xl border transition-all",
-              themeConfig.muted,
+              "w-full max-w-lg flex flex-col gap-4 p-5 sm:p-6 rounded-2xl border transition-all",
+              themeConfig.card,
               themeConfig.border,
+              themeConfig.shadow,
               theme === "glass" && "backdrop-blur-xl bg-white/40",
-              theme === "neon" && "shadow-[0_0_20px_rgba(34,211,238,0.1)]",
+              theme === "neon" && "shadow-[0_0_30px_rgba(34,211,238,0.15)]",
+              theme === "luxury" && "shadow-[0_0_30px_rgba(251,191,36,0.1)]",
             )}
           >
-            <Input
-              type="email"
-              placeholder={theme === "terminal" ? "your@email.sh" : "Введите email для уведомления"}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={cn(
-                "flex-1 border-0 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none text-sm sm:text-base",
-                themeConfig.cardForeground,
-                themeConfig.fontClass,
-                "placeholder:opacity-50",
-              )}
-            />
-            <button
-              className={cn(
-                "w-full px-4 sm:px-6 py-2.5 font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-sm sm:text-base sm:py-1.5 rounded-lg",
-                "hover:scale-[1.02] active:scale-[0.98]",
-                themeConfig.accent,
-                themeConfig.accentForeground,
-                themeConfig.fontClass,
-                theme === "neon" && "shadow-[0_0_25px_rgba(34,211,238,0.5)]",
-                theme === "luxury" && "shadow-[0_0_25px_rgba(251,191,36,0.3)]",
-              )}
-            >
-              {currentContent.cta}
-              <ArrowRight className="w-4 h-4" />
-            </button>
+            <p className={cn("text-sm font-semibold text-center", themeConfig.cardForeground, themeConfig.fontClass)}>
+              {theme === "terminal" ? "// подать заявку на участие" : "Подать заявку на участие"}
+            </p>
+
+            {formStatus === "success" ? (
+              <div className={cn("text-center py-6 space-y-2", themeConfig.cardForeground, themeConfig.fontClass)}>
+                <p className="text-2xl">✨</p>
+                <p className="font-semibold">Заявка отправлена!</p>
+                <p className={cn("text-sm", themeConfig.mutedForeground)}>Мы свяжемся с вами в ближайшее время.</p>
+                <button onClick={() => setFormStatus("idle")} className={cn("text-xs underline mt-2", themeConfig.mutedForeground)}>Отправить ещё</button>
+              </div>
+            ) : (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="flex flex-col gap-1.5">
+                    <Label className={cn("text-xs", themeConfig.mutedForeground, themeConfig.fontClass)}>Имя и фамилия *</Label>
+                    <Input name="name" value={form.name} onChange={handleFormChange} placeholder="Анна Иванова"
+                      className={cn("text-sm", themeConfig.muted, themeConfig.cardForeground, themeConfig.border, themeConfig.fontClass, "placeholder:opacity-40")} />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <Label className={cn("text-xs", themeConfig.mutedForeground, themeConfig.fontClass)}>Возраст</Label>
+                    <Input name="age" value={form.age} onChange={handleFormChange} placeholder="25"
+                      className={cn("text-sm", themeConfig.muted, themeConfig.cardForeground, themeConfig.border, themeConfig.fontClass, "placeholder:opacity-40")} />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <Label className={cn("text-xs", themeConfig.mutedForeground, themeConfig.fontClass)}>Телефон *</Label>
+                    <Input name="phone" value={form.phone} onChange={handleFormChange} placeholder="+7 999 000-00-00"
+                      className={cn("text-sm", themeConfig.muted, themeConfig.cardForeground, themeConfig.border, themeConfig.fontClass, "placeholder:opacity-40")} />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <Label className={cn("text-xs", themeConfig.mutedForeground, themeConfig.fontClass)}>Email</Label>
+                    <Input name="email" value={form.email} onChange={handleFormChange} placeholder="example@mail.ru"
+                      className={cn("text-sm", themeConfig.muted, themeConfig.cardForeground, themeConfig.border, themeConfig.fontClass, "placeholder:opacity-40")} />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Label className={cn("text-xs", themeConfig.mutedForeground, themeConfig.fontClass)}>Категория</Label>
+                  <select name="category" value={form.category} onChange={handleFormChange}
+                    className={cn("w-full rounded-md border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-offset-0", themeConfig.muted, themeConfig.cardForeground, themeConfig.border, themeConfig.fontClass)}>
+                    <option value="">— выберите категорию —</option>
+                    <option value="Мисс">Мисс</option>
+                    <option value="Миссис">Миссис</option>
+                  </select>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Label className={cn("text-xs", themeConfig.mutedForeground, themeConfig.fontClass)}>Расскажите о себе</Label>
+                  <Textarea name="about" value={form.about} onChange={handleFormChange} placeholder="Увлечения, достижения, мечты..." rows={3}
+                    className={cn("text-sm resize-none", themeConfig.muted, themeConfig.cardForeground, themeConfig.border, themeConfig.fontClass, "placeholder:opacity-40")} />
+                </div>
+                {formStatus === "error" && (
+                  <p className="text-xs text-red-500 text-center">Ошибка отправки. Попробуйте ещё раз.</p>
+                )}
+                <button
+                  onClick={handleSubmit}
+                  disabled={formStatus === "loading" || !form.name || !form.phone}
+                  className={cn(
+                    "w-full py-3 font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-sm rounded-xl",
+                    "hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed",
+                    themeConfig.accent,
+                    themeConfig.accentForeground,
+                    themeConfig.fontClass,
+                    theme === "neon" && "shadow-[0_0_25px_rgba(34,211,238,0.5)]",
+                    theme === "luxury" && "shadow-[0_0_25px_rgba(251,191,36,0.3)]",
+                  )}
+                >
+                  {formStatus === "loading" ? "Отправляем..." : "Подать заявку"}
+                  {formStatus !== "loading" && <ArrowRight className="w-4 h-4" />}
+                </button>
+              </>
+            )}
           </div>
 
           {/* Features */}
