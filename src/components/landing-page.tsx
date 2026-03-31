@@ -36,10 +36,10 @@ export function LandingPage() {
     setForm((prev) => ({ ...prev, [name]: value }))
     if (name === "age") {
       const age = Number(value)
-      if (activeTab === "miss" && value && (age < 18 || age > 30)) {
-        setAgeError("Категория Мисс: возраст от 18 до 30 лет")
-      } else if (activeTab === "missus" && value && (age < 25 || age > 45)) {
-        setAgeError("Категория Миссис: возраст от 25 до 45 лет")
+      if (activeTab === "miss" && value && (age < 18 || age > 35)) {
+        setAgeError("Категория Мисс: возраст от 18 до 35 лет")
+      } else if (activeTab === "missus" && value && (age < 18 || age > 45)) {
+        setAgeError("Категория Миссис: возраст от 18 до 45 лет")
       } else {
         setAgeError("")
       }
@@ -487,8 +487,8 @@ export function LandingPage() {
             {/* Category description */}
             <div className={cn("text-xs text-center px-2 py-2 rounded-lg", themeConfig.muted, themeConfig.mutedForeground, themeConfig.fontClass)}>
               {activeTab === "miss"
-                ? "Незамужние девушки без детей · 18–30 лет"
-                : "Замужние и/или имеющие детей · 25–45 лет"}
+                ? "Незамужние девушки · 18–35 лет"
+                : "Замужние девушки и женщины · 18–45 лет"}
             </div>
 
             {formStatus === "success" ? (
@@ -508,9 +508,9 @@ export function LandingPage() {
                   </div>
                   <div className="flex flex-col gap-1.5">
                     <Label className={cn("text-xs", themeConfig.mutedForeground, themeConfig.fontClass)}>
-                      Возраст {activeTab === "miss" ? "(18–30)" : "(25–45)"}
+                      Возраст {activeTab === "miss" ? "(18–35)" : "(18–45)"}
                     </Label>
-                    <Input name="age" value={form.age} onChange={handleFormChange} placeholder={activeTab === "miss" ? "18–30" : "25–45"} type="number"
+                    <Input name="age" value={form.age} onChange={handleFormChange} placeholder={activeTab === "miss" ? "18–35" : "18–45"} type="number"
                       className={cn("text-sm", themeConfig.muted, themeConfig.cardForeground, themeConfig.border, themeConfig.fontClass, "placeholder:opacity-40", ageError && "border-red-400")} />
                     {ageError && <p className="text-xs text-red-400">{ageError}</p>}
                   </div>
