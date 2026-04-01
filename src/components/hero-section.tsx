@@ -70,8 +70,17 @@ export function HeroSection({
           {currentContent.badge}
         </div>
 
-        {/* Crown — shown for non-luxury themes only (luxury has it in bg) */}
-        {theme !== "luxury" && (
+        {/* Crown image */}
+        {theme === "luxury" ? (
+          <div className="w-full -mx-4 sm:-mx-8 md:-mx-16 lg:-mx-24 xl:-mx-32">
+            <img
+              src="https://cdn.poehali.dev/projects/a9c62102-7235-42c6-a141-66004f7200f2/bucket/a1129d70-1271-407a-aa50-fb06415f78b0.png"
+              alt="Конкурс красоты"
+              className="w-full object-cover select-none pointer-events-none"
+              style={{ maxHeight: "480px", objectPosition: "center top" }}
+            />
+          </div>
+        ) : (
           <div className="flex justify-center -mb-4">
             <img
               src="https://cdn.poehali.dev/projects/a9c62102-7235-42c6-a141-66004f7200f2/bucket/adaff1de-d6c9-45f1-9edd-f445b938a23d.jpeg"
@@ -87,8 +96,6 @@ export function HeroSection({
             />
           </div>
         )}
-        {/* Spacer for luxury to offset background crown */}
-        {theme === "luxury" && <div className="h-40 sm:h-48" />}
 
         {/* Main Headline */}
         <div className="text-center space-y-3 sm:space-y-4">
