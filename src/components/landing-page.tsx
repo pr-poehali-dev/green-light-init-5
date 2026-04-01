@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 import { HeroSection } from "./hero-section"
 import { InfoSection } from "./info-section"
 import { ContestantsSection } from "./contestants-section"
+import { RulesSection } from "./rules-section"
 
 export function LandingPage() {
   const { theme } = useTheme()
@@ -17,7 +18,7 @@ export function LandingPage() {
   const [minutes, setMinutes] = useState("0")
   const [seconds, setSeconds] = useState("0")
   const [showSettings, setShowSettings] = useState(false)
-  const [activeSection, setActiveSection] = useState<"info" | "vote" | "apply">("info")
+  const [activeSection, setActiveSection] = useState<"info" | "vote" | "apply" | "rules">("info")
 
   const emptyForm = { name: "", age: "", phone: "", email: "", about: "" }
   const [form, setForm] = useState(emptyForm)
@@ -166,6 +167,7 @@ export function LandingPage() {
               { key: "info", label: "Информация" },
               { key: "vote", label: "Участницы" },
               { key: "apply", label: "Подать заявку" },
+              { key: "rules", label: "Положение" },
             ] as const).map((tab) => (
               <button
                 key={tab.key}
@@ -189,6 +191,7 @@ export function LandingPage() {
 
       {activeSection === "info" && <InfoSection />}
       {activeSection === "vote" && <ContestantsSection />}
+      {activeSection === "rules" && <RulesSection />}
       {activeSection === "apply" && (() => {
         setTimeout(() => document.getElementById("apply-form")?.scrollIntoView({ behavior: "smooth", block: "center" }), 50)
         return null
