@@ -1,6 +1,8 @@
 import { useTheme } from "./theme-context"
 import { themes } from "@/lib/themes"
 import { cn } from "@/lib/utils"
+import Icon from "@/components/ui/icon"
+import { jsPDF } from "jspdf"
 
 const sections = [
   {
@@ -88,6 +90,60 @@ const sections = [
   },
 ]
 
+function downloadPDF() {
+  const doc = new jsPDF({ unit: "mm", format: "a4" })
+
+  const pageW = doc.internal.pageSize.getWidth()
+  const pageH = doc.internal.pageSize.getHeight()
+  const margin = 20
+  const maxW = pageW - margin * 2
+  let y = margin
+
+  const checkPage = (needed: number) => {
+    if (y + needed > pageH - margin) {
+      doc.addPage()
+      y = margin
+    }
+  }
+
+  doc.setFont("helvetica", "bold")
+  doc.setFontSize(16)
+  doc.text("Miss Internet Krasnokamensk", pageW / 2, y, { align: "center" })
+  y += 7
+  doc.setFont("helvetica", "normal")
+  doc.setFontSize(11)
+  doc.text("Polozhenie o konkurse", pageW / 2, y, { align: "center" })
+  y += 12
+
+  sections.forEach((section) => {
+    checkPage(12)
+    doc.setFont("helvetica", "bold")
+    doc.setFontSize(12)
+    const titleLines = doc.splitTextToSize(section.title, maxW) as string[]
+    doc.text(titleLines, margin, y)
+    y += titleLines.length * 6 + 2
+
+    doc.setFont("helvetica", "normal")
+    doc.setFontSize(10)
+    section.items.forEach((item) => {
+      const lines = doc.splitTextToSize(item, maxW) as string[]
+      checkPage(lines.length * 5 + 2)
+      doc.text(lines, margin, y)
+      y += lines.length * 5 + 2
+    })
+    y += 4
+  })
+
+  checkPage(16)
+  doc.setFont("helvetica", "bold")
+  doc.setFontSize(10)
+  const consent = "Soglasie na obrabotku personal'nykh dannykh — vse uchastnitsy podpisyvayut pri zapolnenii zayavki."
+  const consentLines = doc.splitTextToSize(consent, maxW) as string[]
+  doc.text(consentLines, margin, y)
+
+  doc.save("polozhenie-miss-internet-krasnokamensk.pdf")
+}
+
 export function RulesSection() {
   const { theme } = useTheme()
   const themeConfig = themes[theme]
@@ -95,18 +151,37 @@ export function RulesSection() {
   return (
     <div className="relative z-10 w-full">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        <h2
-          className={cn(
-            "text-2xl sm:text-3xl font-bold text-center mb-2",
-            themeConfig.foreground,
-            themeConfig.fontClass,
-          )}
-        >
-          Мисс Интернет Краснокаменск
-        </h2>
-        <p className={cn("text-center text-sm mb-10", themeConfig.mutedForeground, themeConfig.fontClass)}>
-          Положение о конкурсе
-        </p>
+        <div className="flex items-start justify-between gap-4 mb-2">
+          <div className="flex-1">
+            <h2
+              className={cn(
+                "text-2xl sm:text-3xl font-bold mb-2",
+                themeConfig.foreground,
+                themeConfig.fontClass,
+              )}
+            >
+              Мисс Интернет Краснокаменск
+            </h2>
+            <p className={cn("text-sm", themeConfig.mutedForeground, themeConfig.fontClass)}>
+              Положение о конкурсе
+            </p>
+          </div>
+          <button
+            onClick={downloadPDF}
+            className={cn(
+              "shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]",
+              themeConfig.accent,
+              themeConfig.accentForeground,
+              themeConfig.fontClass,
+              theme === "neon" && "shadow-[0_0_15px_rgba(34,211,238,0.4)]",
+              theme === "luxury" && "shadow-[0_0_15px_rgba(200,210,220,0.3)]",
+            )}
+          >
+            <Icon name="Download" size={16} />
+            Скачать PDF
+          </button>
+        </div>
+        <div className={cn("mb-10 border-b", themeConfig.border)} />
 
         <div className="flex flex-col gap-8">
           {sections.map((section) => (
