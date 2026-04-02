@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { ThemeSwitcher } from "./theme-switcher"
 import { useTheme } from "./theme-context"
 import { themes } from "@/lib/themes"
 import { cn } from "@/lib/utils"
@@ -110,30 +109,9 @@ export function LandingPage() {
       )}
     >
       {/* Background decorations */}
-      {theme === "neon" && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
-        </div>
-      )}
-      {theme === "glass" && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-indigo-300/30 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-pink-300/30 to-transparent rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
-        </div>
-      )}
-      {theme === "luxury" && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/3 left-1/2 w-[800px] h-[400px] bg-gradient-to-r from-slate-500/5 via-slate-300/8 to-slate-500/5 rounded-full blur-3xl -translate-x-1/2" />
-        </div>
-      )}
-
-      {/* Header */}
-      <header className="relative z-50 w-full">
-        <div className="max-w-6xl mx-auto px-6 py-6 flex items-center text-center justify-center">
-          <ThemeSwitcher />
-        </div>
-      </header>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/3 left-1/2 w-[800px] h-[400px] bg-gradient-to-r from-slate-500/5 via-slate-300/8 to-slate-500/5 rounded-full blur-3xl -translate-x-1/2" />
+      </div>
 
       {/* Hero */}
       <HeroSection
@@ -176,9 +154,7 @@ export function LandingPage() {
                   "flex-1 sm:flex-none px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200",
                   themeConfig.fontClass,
                   activeSection === tab.key
-                    ? cn(themeConfig.accent, themeConfig.accentForeground,
-                        theme === "neon" && "shadow-[0_0_15px_rgba(34,211,238,0.4)]",
-                        theme === "luxury" && "shadow-[0_0_15px_rgba(251,191,36,0.3)]")
+                    ? cn(themeConfig.accent, themeConfig.accentForeground, "shadow-[0_0_15px_rgba(251,191,36,0.3)]")
                     : cn(themeConfig.mutedForeground, "hover:opacity-80"),
                 )}
               >
@@ -206,11 +182,7 @@ export function LandingPage() {
           themeConfig.fontClass,
         )}
       >
-        <p className="text-xs sm:text-sm">
-          {theme === "terminal"
-            ? "© 2025 // launchpad_inc | privacy --policy | terms --conditions"
-            : "© 2026 Мисс Интернет Краснокаменск · Конкурс красоты и элегантности"}
-        </p>
+        <p className="text-xs sm:text-sm">© 2026 Мисс Интернет Краснокаменск · Конкурс красоты и элегантности</p>
       </footer>
     </div>
   )
